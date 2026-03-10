@@ -1,8 +1,14 @@
 name: Build Job
 on: 
-  push:
+#  push:
+#    branches: 
+#      - main
+
+  pull_request:
     branches: 
-      - main
+      - main 
+      - feature
+    
 
 jobs:
   Build:
