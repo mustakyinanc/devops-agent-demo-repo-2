@@ -23,5 +23,6 @@ sql dump file:
 - > mysql -u <user_name> -p accounts < db_backup.sql
 
 # jenkins webhook test 13:17
+# jenkist webhook test 13:24
 
 
