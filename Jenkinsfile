@@ -4,15 +4,14 @@ pipeline {
     environment {
         ECR_REPOSITORY = 'vprofile-appimage'
         AWS_REGION     = 'us-east-1'
-        MAVEN_VERSION  = 'Maven3.9.9'
 
         // Demo: Bilerek fail ettirmek icin 'true' yapip push edin
         // Normal calisma icin 'false' birakin
-        FORCE_FAIL     = 'true'
+        FORCE_FAIL     = 'false'
     }
 
     tools {
-        maven "${MAVEN_VERSION}"
+        maven 'Maven3.9.9'
     }
 
     stages {
