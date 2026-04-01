@@ -8,9 +8,6 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  FORCE_FAIL: 'false'  # Set to 'true' to intentionally fail for demo purposes
-
 permissions:
   contents: read
 
@@ -21,14 +18,10 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v4
 
-      - name: Check demo fail flag
-        if: env.FORCE_FAIL == 'true'
-        run: |
-          echo "FORCE_FAIL=true detected — failing intentionally for demo."
-          exit 1
-
       - name: Maven Build
-        run: echo "Building application... Done."
+        run: |
+          echo "Building application... Done."
+          exit 1
 
       - name: Upload Build Artifact
         run: echo "Uploading artifact... Done."
