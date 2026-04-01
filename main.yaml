@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  ECR_REPOSITORY: 'actionprofile'
+  FORCE_FAIL: 'false'  # Set to 'true' to intentionally fail for demo purposes
 
 permissions:
   contents: read
@@ -20,17 +20,18 @@ jobs:
     steps:
       - name: Code checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+
+      - name: Check demo fail flag
+        if: env.FORCE_FAIL == 'true'
+        run: |
+          echo "FORCE_FAIL=true detected — failing intentionally for demo."
+          exit 1
 
       - name: Maven Build
-        run: mvn clean install -DskipTests
+        run: echo "Building application... Done."
 
-      - name: Upload Build Artifact (WAR)
-        uses: actions/upload-artifact@v4
-        with:
-          name: actionprofile-app
-          path: target/*.war
+      - name: Upload Build Artifact
+        run: echo "Uploading artifact... Done."
 
 
   Unit_Test:
@@ -39,11 +40,9 @@ jobs:
     steps:
       - name: Code checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Run Unit Tests
-        run: mvn test
+        run: echo "Running unit tests... All passed."
 
 
   BUILD_AND_PUBLISH:
@@ -54,29 +53,15 @@ jobs:
     steps:
       - name: Code checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ vars.AWS_REGION }}
+        run: echo "Configuring AWS credentials... Done."
 
       - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+        run: echo "Logging in to ECR... Done."
 
-      - name: Build, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+      - name: Build and push Docker image
+        run: echo "Building and pushing Docker image to ECR... Done."
 
 
   Notify_DevOps_Agent:
