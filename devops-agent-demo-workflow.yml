@@ -21,7 +21,7 @@ jobs:
       - name: Maven Build
         run: |
           # To trigger a demo failure, uncomment the line below and comment out the echo line
-          # exit 1
+          exit 1
           echo "Building application... Done."
 
       - name: Upload Build Artifact
