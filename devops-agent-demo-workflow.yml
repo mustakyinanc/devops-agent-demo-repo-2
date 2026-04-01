@@ -1,4 +1,4 @@
-name: actionprofile CICD Workflow
+name: devops-agent-demo-workflow
 on:
   push:
     branches:
