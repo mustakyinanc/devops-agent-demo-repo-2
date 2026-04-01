@@ -34,6 +34,7 @@ sql dump file:
 # test again
 # test again and again
 # webhook test
+# slack channel test
 
 
 
