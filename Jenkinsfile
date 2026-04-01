@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Set to 'true' to intentionally fail the pipeline for demo purposes
-        FORCE_FAIL = 'false'
+        FORCE_FAIL = 'true'
     }
 
     stages {
